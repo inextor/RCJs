@@ -92,6 +92,33 @@ export class Node
         return [d1,d2,d3,d4];
     }
 
+    static build16PxN(l):Node[][]
+    {
+        let levels:Node[][] = [];
+        let d1 = Node.buildDictionary();
+
+        for(let i=0;i<levels;i++)
+        {
+            levels[i] = Node.buildDictionary();
+        }
+
+        for(let i=0;i<levels;i++)
+        {
+            levels[i].forEach((n,index)=>{
+                if( i<l-1 )
+                {
+                    n.setNodeFor(index,levels[i+1])
+                }
+                else
+                {
+                    n.setNodeFor(index,levels[0]);
+                }
+            })
+        }
+
+        return levels;
+    }
+
     static build16Plus16():Node[]
     {
         let d1 = Node.buildDictionary();
@@ -114,41 +141,6 @@ export class Node
         })
     }
 
-    static build16x4levels()
-    {
-        let level1:Node[][] = [];
-        let level2:Node[][] = [];
-        let level3:Node[][] = [];
-        let level4:Node[][] = [];
-
-        for(let i=0;i<16;i++)
-        {
-            level1[i] = this.build16();
-            level2[i] = this.build16();
-            level3[i] = this.build16();
-            level4[i] = this.build16();
-        }
-        for(let i=0;i<16;i++)
-        {
-            level1[i].forEach((n,index)=>n.setNodeFor(index,level2[index]));
-            level2[i].forEach((n,index)=>n.setNodeFor(index,level3[index]));
-            level3[i].forEach((n,index)=>n.setNodeFor(index,level4[index]));
-            level4[i].forEach((n,index)=>n.setNodeFor(index,level1[index]));
-        }
-
-    }
-
-
-    static build16():Node[]
-    {
-        let node = new Node(0);
-        node.foreach((n,index)=>{
-            let n2 = new Node(index);
-            node.setNodeFor(index,n2);
-        })
-
-        return node.node_dictionary(
-    }
 
     //Interesting next schema
     //its a triangle
