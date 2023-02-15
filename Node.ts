@@ -77,16 +77,33 @@ export class Node
         d2.forEach((n,i)=>n.setNodeFor(i,d1[i]));
         return d1;
     }
+
+    static build16P16X4():Node[][]
+    {
+        let d1 = Node.buildDictionary();
+        let d2 = Node.buildDictionary();
+        let d3 = Node.buildDictionary();
+        let d4 = Node.buildDictionary();
+
+        d1.forEach((n,i)=>n.setNodeFor(i,d2[i]));
+        d2.forEach((n,i)=>n.setNodeFor(i,d3[i]));
+        d3.forEach((n,i)=>n.setNodeFor(i,d4[i]));
+        d4.forEach((n,i)=>n.setNodeFor(i,d1[i]));
+        return [d1,d2,d3,d4];
+    }
+
     static build16Plus16():Node[]
     {
-         let d1 = Node.buildDictionary();
+        let d1 = Node.buildDictionary();
         let d2 = Node.buildDictionary();
+        let d3 = Node.buildDictionary();
+        let d4 = Node.buildDictionary();
 
         d1.forEach((n,i)=>n.setNodeFor(i,d2[i]));
         d2.forEach((n,i)=>n.setNodeFor(i,d1[i]));
 
     }
-    static build16Plus32
+    static build16Plus32()
     {
         let d1 = Node.buildDictionary();
         let d2 = Node.buildDictionary();
@@ -95,6 +112,42 @@ export class Node
         d1.forEach((node,half_byte)=>{            
             node.setNodeFor(half_byte,half_byte<8?d2[half_byte]:d3[half_byte]);
         })
+    }
+
+    static build16x4levels()
+    {
+        let level1:Node[][] = [];
+        let level2:Node[][] = [];
+        let level3:Node[][] = [];
+        let level4:Node[][] = [];
+
+        for(let i=0;i<16;i++)
+        {
+            level1[i] = this.build16();
+            level2[i] = this.build16();
+            level3[i] = this.build16();
+            level4[i] = this.build16();
+        }
+        for(let i=0;i<16;i++)
+        {
+            level1[i].forEach((n,index)=>n.setNodeFor(index,level2[index]));
+            level2[i].forEach((n,index)=>n.setNodeFor(index,level3[index]));
+            level3[i].forEach((n,index)=>n.setNodeFor(index,level4[index]));
+            level4[i].forEach((n,index)=>n.setNodeFor(index,level1[index]));
+        }
+
+    }
+
+
+    static build16():Node[]
+    {
+        let node = new Node(0);
+        node.foreach((n,index)=>{
+            let n2 = new Node(index);
+            node.setNodeFor(index,n2);
+        })
+
+        return node.node_dictionary(
     }
 
     //Interesting next schema
