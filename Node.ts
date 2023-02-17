@@ -349,7 +349,7 @@ function uncompress(node, data:Uint8Array[])
  }
 
 
- function main_alg(data:Uint8Array)
+ function main_alg(data:Uint8Array | number[])
  {
     let d = Node.build16PxN(17)
     let f_node =d[0][0];
