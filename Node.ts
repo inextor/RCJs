@@ -321,7 +321,8 @@ function compress(node:CNode, data:number[]):number[]
 			diff+=16;
 
 		let x = current.compress(diff)
-		counter[ x.value ]++;
+		current = x.node;
+                counter[ x.value ]++;
 		u_data[index++] = x.value;
 		prev = d;
 	}
